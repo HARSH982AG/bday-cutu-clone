@@ -16,38 +16,54 @@ const submitPuzzle = document.getElementById("submitPuzzle");
 
 let unlocked = false;
 
-// 💌 PUZZLES
+// 💌 ALL PUZZLES (order matters now)
 const puzzles = [
   { text: "aapka naam?", answer: "haha" },
   { text: "I feel calm when I talk to ___ 😌", answer: "chal be" },
   { text: "You make my days ___ ✨", answer: "bekaltter" },
-  { text: "My heart feels safe with ___ ❤️", answer: "abcdefg" }
+  { text: "My heart feels safe with ___ ❤️", answer: "abcdefg" },
+
+  { text: "Who makes me smile without trying? 😏", answer: "you" },
+  { text: "Mujhe sabse zyada kaun pasand hai? 😌", answer: "tum" },
+  { text: "One word to describe you 💖", answer: "perfect" }
 ];
 
-let currentPuzzle = null;
+// 🔢 How many puzzles must be solved
+const REQUIRED_PUZZLES = 3;
 
-// 🎲 Pick new puzzle
-function pickNewPuzzle() {
-  currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
-  puzzleText.textContent = currentPuzzle.text;
+let currentIndex = 0;
+
+// 🎯 Start puzzle chain
+showPuzzleBtn.onclick = () => {
+  puzzle.classList.remove("hidden");
+  currentIndex = 0;
+  loadPuzzle();
+};
+
+// 📥 Load current puzzle
+function loadPuzzle() {
+  const currentPuzzle = puzzles[currentIndex];
+  puzzleText.textContent = `(${currentIndex + 1}/${REQUIRED_PUZZLES}) ${currentPuzzle.text}`;
   puzzleInput.value = "";
   puzzleFeedback.textContent = "";
 }
 
-// 💌 Button ALWAYS works
-showPuzzleBtn.onclick = () => {
-  puzzle.classList.remove("hidden");
-  pickNewPuzzle();
-};
-
 // ✅ Check answer
 submitPuzzle.onclick = () => {
-  const ans = puzzleInput.value.trim().toLowerCase();
+  const userAnswer = puzzleInput.value.trim().toLowerCase();
+  const correctAnswer = puzzles[currentIndex].answer.toLowerCase();
 
-  if (ans === currentPuzzle.answer.toLowerCase()) {
-    unlockLetter();
+  if (userAnswer === correctAnswer) {
+    currentIndex++;
+
+    if (currentIndex >= REQUIRED_PUZZLES) {
+      unlockLetter();
+    } else {
+      puzzleFeedback.textContent = "Correct 😌 next one…";
+      setTimeout(loadPuzzle, 800);
+    }
   } else {
-    puzzleFeedback.textContent = "Wrong 😏 Try again";
+    puzzleFeedback.textContent = "Nope 😏 try again";
   }
 };
 
@@ -64,7 +80,6 @@ function updateCountdown() {
   if (unlocked) return;
 
   const diff = unlockTime - Date.now();
-
   if (diff <= 0) {
     unlockLetter();
     return;
