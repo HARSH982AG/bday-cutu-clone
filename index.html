@@ -1,4 +1,3 @@
-<!-- redeploy -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,13 +25,18 @@
     <div class="pulse">💗</div>
     <p id="waitMsg" class="wait-msg"></p>
 
+    <!-- ALWAYS VISIBLE BUTTON -->
+    <button id="showPuzzleBtn">
+      Try to unlock early 💌
+    </button>
+
     <!-- PUZZLE -->
-    <div id="puzzle" class="puzzle hidden">
-      <h2>Unlock Early 💌</h2>
+    <div id="puzzle" class="hidden">
+      <h2>Unlock Early 💖</h2>
       <p id="puzzleText"></p>
 
       <input id="puzzleInput" placeholder="Type your answer…" />
-      <button onclick="checkPuzzle()">Unlock 💖</button>
+      <button id="submitPuzzle">Unlock 💋</button>
 
       <p id="puzzleFeedback" class="soft-text"></p>
     </div>
