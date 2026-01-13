@@ -1,6 +1,7 @@
-// 🔓 Unlock time (change if needed)
+// 🔓 Unlock time (change if you want)
 const unlockTime = new Date(2026, 0, 14, 0, 0, 0).getTime();
 
+// Elements
 const lock = document.getElementById("lock");
 const letter = document.getElementById("letter");
 const countdown = document.getElementById("countdown");
@@ -23,13 +24,23 @@ const puzzles = [
   { text: "My heart feels safe with ___ ❤️", answer: "abcdefg" }
 ];
 
-let currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
+let currentPuzzle = null;
 
-// 🎯 Show puzzle immediately when button is clicked
+// 🎲 Pick a new random puzzle
+function pickNewPuzzle() {
+  const randomIndex = Math.floor(Math.random() * puzzles.length);
+  currentPuzzle = puzzles[randomIndex];
+
+  puzzleText.textContent = currentPuzzle.text;
+  puzzleInput.value = "";
+  puzzleFeedback.textContent = "";
+}
+
+// 💌 Show puzzle + change question every time
 showPuzzleBtn.onclick = () => {
   puzzle.classList.remove("hidden");
   showPuzzleBtn.style.display = "none";
-  puzzleText.textContent = currentPuzzle.text;
+  pickNewPuzzle();
 };
 
 // ✅ Check puzzle answer
@@ -39,11 +50,11 @@ submitPuzzle.onclick = () => {
   if (ans === currentPuzzle.answer.toLowerCase()) {
     unlockLetter();
   } else {
-    puzzleFeedback.textContent = "Almost 😌 Try again or wait 💕";
+    puzzleFeedback.textContent = "Wrong 😏 Try again or wait 💕";
   }
 };
 
-// 🔓 Unlock the letter
+// 🔓 Unlock letter
 function unlockLetter() {
   if (unlocked) return;
   unlocked = true;
@@ -71,6 +82,6 @@ function updateCountdown() {
     "Just a little patience… something special is waiting 💖";
 }
 
-// 🚀 Start
+// 🚀 Start countdown
 updateCountdown();
 setInterval(updateCountdown, 1000);
