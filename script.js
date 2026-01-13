@@ -1,5 +1,4 @@
-// 🎂 REAL MIDNIGHT — 14 Jan 2026, 12:00 AM
-// January = 0
+// 🔓 Unlock time (change if needed)
 const unlockTime = new Date(2026, 0, 14, 0, 0, 0).getTime();
 
 const lock = document.getElementById("lock");
@@ -7,43 +6,59 @@ const letter = document.getElementById("letter");
 const countdown = document.getElementById("countdown");
 const waitMsg = document.getElementById("waitMsg");
 
+const showPuzzleBtn = document.getElementById("showPuzzleBtn");
+const puzzle = document.getElementById("puzzle");
+const puzzleText = document.getElementById("puzzleText");
+const puzzleInput = document.getElementById("puzzleInput");
+const puzzleFeedback = document.getElementById("puzzleFeedback");
+const submitPuzzle = document.getElementById("submitPuzzle");
+
 let unlocked = false;
 
-/* 🌸 Rose-petal confetti */
-function launchConfetti() {
-  const petals = ["🌸", "💮", "🌺"];
+// 💌 PUZZLES (your custom ones)
+const puzzles = [
+  { text: "aapka naam?", answer: "haha" },
+  { text: "I feel calm when I talk to ___ 😌", answer: "chal be" },
+  { text: "You make my days ___ ✨", answer: "bekaltter" },
+  { text: "My heart feels safe with ___ ❤️", answer: "abcdefg" }
+];
 
-  for (let i = 0; i < 40; i++) {
-    const petal = document.createElement("div");
-    petal.className = "confetti";
-    petal.textContent = petals[Math.floor(Math.random() * petals.length)];
-    petal.style.left = Math.random() * 100 + "vw";
-    petal.style.animationDuration = 3 + Math.random() * 2 + "s";
+let currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
 
-    document.body.appendChild(petal);
-    setTimeout(() => petal.remove(), 5000);
+// 🎯 Show puzzle immediately when button is clicked
+showPuzzleBtn.onclick = () => {
+  puzzle.classList.remove("hidden");
+  showPuzzleBtn.style.display = "none";
+  puzzleText.textContent = currentPuzzle.text;
+};
+
+// ✅ Check puzzle answer
+submitPuzzle.onclick = () => {
+  const ans = puzzleInput.value.trim().toLowerCase();
+
+  if (ans === currentPuzzle.answer.toLowerCase()) {
+    unlockLetter();
+  } else {
+    puzzleFeedback.textContent = "Almost 😌 Try again or wait 💕";
   }
+};
+
+// 🔓 Unlock the letter
+function unlockLetter() {
+  if (unlocked) return;
+  unlocked = true;
+  lock.classList.add("hidden");
+  letter.classList.remove("hidden");
 }
 
-/* 📳 Gentle vibration */
-function vibrateOnUnlock() {
-  if ("vibrate" in navigator) {
-    navigator.vibrate([100, 50, 100]);
-  }
-}
-
+// ⏳ Countdown timer
 function updateCountdown() {
   if (unlocked) return;
 
   const diff = unlockTime - Date.now();
 
-  // 🔑 Prevents 0s freeze
-  if (diff <= 1000) {
-    unlocked = true;
-    lock.classList.add("hidden");
-    letter.classList.remove("hidden");
-    launchConfetti();
-    vibrateOnUnlock();
+  if (diff <= 0) {
+    unlockLetter();
     return;
   }
 
@@ -52,17 +67,10 @@ function updateCountdown() {
   const s = Math.floor((diff % 60000) / 1000);
 
   countdown.textContent = `Unlocks in ${h}h ${m}m ${s}s`;
-
-  if (diff > 3600000) {
-    waitMsg.textContent = "Just a little patience… something special is waiting 💕";
-  } else if (diff > 600000) {
-    waitMsg.textContent = "Getting closer… my heart is racing 💗";
-  } else if (diff > 60000) {
-    waitMsg.textContent = "Almost there, Cutu… 💖";
-  } else {
-    waitMsg.textContent = "Any second now… 🫶🏻";
-  }
+  waitMsg.textContent =
+    "Just a little patience… something special is waiting 💖";
 }
 
+// 🚀 Start
 updateCountdown();
 setInterval(updateCountdown, 1000);

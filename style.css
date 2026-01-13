@@ -1,6 +1,4 @@
-* {
-  box-sizing: border-box;
-}
+* { box-sizing: border-box; }
 
 body {
   margin: 0;
@@ -23,74 +21,91 @@ body {
   animation: fadeIn 1.2s ease;
 }
 
-h1 {
+h1, h2 {
   text-align: center;
   color: #e75480;
-  margin-top: 0;
 }
 
 .soft-text {
   text-align: center;
-  font-style: italic;
   opacity: 0.85;
+  font-style: italic;
 }
 
 #countdown {
-  font-size: 1.6rem;
-  font-weight: bold;
+  font-size: 1.5rem;
   text-align: center;
-  margin-top: 18px;
+  margin-top: 16px;
 }
 
 .wait-msg {
   text-align: center;
-  margin-top: 12px;
-  font-size: 0.95rem;
+  margin-top: 10px;
 }
+
+.hidden { display: none; }
 
 .letter {
   white-space: pre-line;
-  font-size: 1rem;
   line-height: 1.6;
+  font-size: 1rem;
 }
 
-.hidden {
-  display: none;
-}
-
-/* Heartbeat */
+/* ❤️ Pulse */
 .pulse {
   text-align: center;
   font-size: 1.6rem;
-  margin-top: 10px;
   animation: pulse 1.5s infinite;
+  margin-top: 8px;
 }
 
 @keyframes pulse {
-  0% { transform: scale(1); opacity: 0.7; }
-  50% { transform: scale(1.2); opacity: 1; }
-  100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); }
 }
 
-/* Rose petals */
+/* 🌸 Confetti */
 .confetti {
   position: fixed;
   top: -20px;
   font-size: 20px;
-  animation: petalFall 4s linear forwards;
-  opacity: 0.9;
+  animation: fall 4s linear forwards;
   z-index: 9999;
-  pointer-events: none;
 }
 
-@keyframes petalFall {
+@keyframes fall {
   to {
     transform: translateY(110vh) rotate(360deg);
     opacity: 0;
   }
 }
 
+/* 🧩 Puzzle */
+.puzzle {
+  margin-top: 20px;
+  text-align: center;
+}
+
+.puzzle input {
+  width: 90%;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.puzzle button {
+  margin-top: 12px;
+  padding: 10px 22px;
+  border-radius: 20px;
+  border: none;
+  background: #e75480;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; }
 }
