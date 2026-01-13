@@ -1,4 +1,4 @@
-// 🔓 Unlock time (change if you want)
+// 🔓 Unlock time
 const unlockTime = new Date(2026, 0, 14, 0, 0, 0).getTime();
 
 // Elements
@@ -16,7 +16,7 @@ const submitPuzzle = document.getElementById("submitPuzzle");
 
 let unlocked = false;
 
-// 💌 PUZZLES (your custom ones)
+// 💌 PUZZLES
 const puzzles = [
   { text: "aapka naam?", answer: "haha" },
   { text: "I feel calm when I talk to ___ 😌", answer: "chal be" },
@@ -26,31 +26,28 @@ const puzzles = [
 
 let currentPuzzle = null;
 
-// 🎲 Pick a new random puzzle
+// 🎲 Pick new puzzle
 function pickNewPuzzle() {
-  const randomIndex = Math.floor(Math.random() * puzzles.length);
-  currentPuzzle = puzzles[randomIndex];
-
+  currentPuzzle = puzzles[Math.floor(Math.random() * puzzles.length)];
   puzzleText.textContent = currentPuzzle.text;
   puzzleInput.value = "";
   puzzleFeedback.textContent = "";
 }
 
-// 💌 Show puzzle + change question every time
+// 💌 Button ALWAYS works
 showPuzzleBtn.onclick = () => {
   puzzle.classList.remove("hidden");
-  showPuzzleBtn.style.display = "none";
   pickNewPuzzle();
 };
 
-// ✅ Check puzzle answer
+// ✅ Check answer
 submitPuzzle.onclick = () => {
   const ans = puzzleInput.value.trim().toLowerCase();
 
   if (ans === currentPuzzle.answer.toLowerCase()) {
     unlockLetter();
   } else {
-    puzzleFeedback.textContent = "Wrong 😏 Try again or wait 💕";
+    puzzleFeedback.textContent = "Wrong 😏 Try again";
   }
 };
 
@@ -62,7 +59,7 @@ function unlockLetter() {
   letter.classList.remove("hidden");
 }
 
-// ⏳ Countdown timer
+// ⏳ Countdown
 function updateCountdown() {
   if (unlocked) return;
 
@@ -82,6 +79,6 @@ function updateCountdown() {
     "Just a little patience… something special is waiting 💖";
 }
 
-// 🚀 Start countdown
+// 🚀 Start
 updateCountdown();
 setInterval(updateCountdown, 1000);
